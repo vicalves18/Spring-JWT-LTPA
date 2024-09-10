@@ -17,7 +17,7 @@ public class JWTService {
 	@Value("${jwt.secret}")
 	private String jwtSecret;
 	
-	private final long jwtExpirationMs = 3600000;
+	private final long jwtExpiration = 3600000;
 	
 	public String generateJwtToken(String username) {
         Map<String, Object> claims = new HashMap<>();
@@ -25,7 +25,7 @@ public class JWTService {
             .setClaims(claims)
             .setSubject(username)
             .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+            .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
             .signWith(SignatureAlgorithm.HS256, jwtSecret.getBytes(StandardCharsets.UTF_8))
             .compact();
     }
